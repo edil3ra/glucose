@@ -1,5 +1,6 @@
 Django==4.0.1
 djangorestframework==3.13.1
 psycopg2>=2.8.6,<2.8.7
-django-filter==0.15.3
-
+django-filter==21.1
+django-cors-headers==3.11.0
+django-utils-six==2.0

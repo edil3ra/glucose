@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+
+            <form>
+                <div class="row">
+                    <div class="col">
+                        <input v-model="user_id" type="text" class="form-control" placeholder="User id">
+                    </div>
+                    <div class="col">
+                        <input v-model="start" type="datetime-local" class="form-control" placeholder="Start">
+                    </div>
+                    <div class="col">
+                        <input v-model="end" type="datetime-local" class="form-control" placeholder="End">
+                    </div>
+                    <button type="submit" @click="send" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div id="delimiter">
+
+            
+        </div>
+    </body>
+</html>
+
+
+<script>
+const people = 'hello'
+var app = new Vue({
+    //template does not work
+    delimiters: ['[[', ']]'],
+    el: '#app',
+    data: function() {
+        return {
+            user_id: null,
+            start: null,
+            end: null,
+            results: null,
+        }
+    },
+    methods: {
+        send: function (event) {
+            event.preventDefault()
+            const query = `http://localhost:8000/api/v1/levels/user/${this.$data.user_id}/`
+            if (this.$data.start !== null) {
+                query = query + `?start=${this.$data.start}`
+            }
+            if (this.$data.start !== null) {
+                query = query + `&end=${this.$data.end}`
+            }
+            
+            axios.get(query)
+                 .then(function (response) {
+                     this.$data = response.results
+                     console.log(this.$data)
+                 })
+                 .catch(function (error) {
+                     console.log(error);
+                 })
+        }
+    }
+});
+</script>
+
